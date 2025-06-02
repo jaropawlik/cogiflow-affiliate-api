@@ -128,74 +128,19 @@ export async function GET(
     // Log successful redirect
     console.log(`Redirecting slug "${sanitizedSlug}" to: ${redirectUrl}`);
 
-    // Return HTML that opens link in new window
-    const html = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <title>Przekierowanie - Cogiflow.ai</title>
-      <meta charset="utf-8">
-      <style>
-        body { 
-          font-family: system-ui, -apple-system, sans-serif; 
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          color: white; 
-          text-align: center; 
-          padding: 50px 20px;
-          margin: 0;
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-        .container { 
-          max-width: 500px; 
-          background: rgba(255,255,255,0.1); 
-          padding: 40px; 
-          border-radius: 20px; 
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(255,255,255,0.2);
-        }
-        .spinner { 
-          width: 40px; 
-          height: 40px; 
-          border: 4px solid rgba(255,255,255,0.3); 
-          border-top-color: white; 
-          border-radius: 50%; 
-          animation: spin 1s linear infinite; 
-          margin: 20px auto;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        a { color: #a8c8ff; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <h1>🚀 Przekierowanie...</h1>
-        <div class="spinner"></div>
-        <p>Otwieramy <strong>${new URL(redirectUrl).hostname}</strong> w nowej zakładce</p>
-        <p><small>Jeśli nic się nie dzieje, <a href="${redirectUrl}" target="_blank">kliknij tutaj</a></small></p>
-      </div>
-      <script>
-        // Open in new tab/window
-        window.open('${redirectUrl}', '_blank');
-        
-        // Show confirmation message
-        setTimeout(() => {
-          document.querySelector('.container').innerHTML = \`
-            <h1>✅ Sukces!</h1>
-            <p>Otworzyliśmy <strong>${new URL(redirectUrl).hostname}</strong> w nowej zakładce</p>
-            <p><a href="${redirectUrl}" target="_blank">Kliknij ponownie</a> jeśli nic się nie otworzyło</p>
-            <p><small><a href="https://cogiflow.ai">← Powrót do Cogiflow.ai</a></small></p>
-          \`;
-        }, 1500);
-      </script>
-    </body>
-    </html>`;
+    // Minimal HTML that opens new window and closes current tab
+    const html = `<!DOCTYPE html>
+<html>
+<head><title>Przekierowanie</title></head>
+<body>
+<script>
+window.open('${redirectUrl}', '_blank');
+window.close();
+</script>
+</body>
+</html>`;
 
-    // Return HTML response instead of redirect
+    // Return minimal HTML response
     return new Response(html, {
       status: 200,
       headers: {
