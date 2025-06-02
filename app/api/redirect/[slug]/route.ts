@@ -128,14 +128,28 @@ export async function GET(
     // Log successful redirect
     console.log(`Redirecting slug "${sanitizedSlug}" to: ${redirectUrl}`);
 
-    // Minimal HTML that opens new window and closes current tab
+    // Minimal HTML that opens new window and shows confirmation
     const html = `<!DOCTYPE html>
 <html>
-<head><title>Przekierowanie</title></head>
+<head>
+<title>Link otworzony</title>
+<style>
+body { font-family: system-ui, sans-serif; text-align: center; padding: 50px; background: #f8fafc; }
+.container { max-width: 400px; margin: 0 auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+h1 { color: #10b981; margin: 0 0 20px 0; }
+p { color: #6b7280; margin: 10px 0; }
+a { color: #7c3aed; text-decoration: none; }
+a:hover { text-decoration: underline; }
+</style>
+</head>
 <body>
+<div class="container">
+<h1>✅ Link otworzony!</h1>
+<p>Otwieraliśmy <strong>${new URL(redirectUrl).hostname}</strong> w nowym oknie</p>
+<p><a href="https://cogiflow.ai">← Powrót do Cogiflow.ai</a></p>
+</div>
 <script>
 window.open('${redirectUrl}', '_blank');
-window.close();
 </script>
 </body>
 </html>`;
