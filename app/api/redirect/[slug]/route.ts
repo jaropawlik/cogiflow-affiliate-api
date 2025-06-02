@@ -160,10 +160,15 @@ document.body.removeChild(link);
 
 // Go back to where user came from
 setTimeout(() => {
-  if (document.referrer && document.referrer !== window.location.href) {
+  if (document.referrer && 
+      document.referrer !== window.location.href && 
+      !document.referrer.includes('404') &&
+      document.referrer.startsWith('https://cogiflow.ai') ||
+      document.referrer.startsWith('https://www.cogiflow.ai')) {
     window.location.href = document.referrer;
   } else {
-    window.history.back();
+    // Safe fallback to homepage
+    window.location.href = 'https://cogiflow.ai';
   }
 }, 100);
 </script>
