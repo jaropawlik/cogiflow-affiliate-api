@@ -1,0 +1,34 @@
+{
+  "name": "cogiflow-affiliate-api",
+  "version": "1.0.0",
+  "description": "Next.js API routes for affiliate link redirects with Supabase",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start -p 3001",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "^14.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "@supabase/supabase-js": "^2.49.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^14.0.0"
+  },
+  "keywords": [
+    "nextjs",
+    "api",
+    "affiliate",
+    "redirect",
+    "supabase",
+    "cogiflow"
+  ],
+  "author": "Cogiflow.ai",
+  "license": "MIT"
+} 
