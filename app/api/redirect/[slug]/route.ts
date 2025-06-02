@@ -94,18 +94,23 @@ export async function GET(
       });
     }
 
-    // Increment the clicks counter
-    const { error: updateError } = await supabase
+    // Increment the clicks counter atomically
+    console.log(`Attempting to update clicks for ID: ${affiliateLink.id}, current clicks: ${affiliateLink.clicks}`);
+    
+    const { data: updateData, error: updateError } = await supabase
       .from('affiliate_links')
       .update({ 
         clicks: (affiliateLink.clicks || 0) + 1,
         updated_at: new Date().toISOString()
       })
-      .eq('id', affiliateLink.id);
+      .eq('id', affiliateLink.id)
+      .select();
 
     if (updateError) {
       console.error('Error updating clicks counter:', updateError);
       // Don't fail the redirect if click tracking fails
+    } else {
+      console.log('Clicks updated successfully:', updateData);
     }
 
     // Determine redirect URL
