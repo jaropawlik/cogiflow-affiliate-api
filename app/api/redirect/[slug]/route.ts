@@ -157,6 +157,15 @@ link.rel = 'noopener noreferrer';
 document.body.appendChild(link);
 link.click();
 document.body.removeChild(link);
+
+// Go back to where user came from
+setTimeout(() => {
+  if (document.referrer && document.referrer !== window.location.href) {
+    window.location.href = document.referrer;
+  } else {
+    window.history.back();
+  }
+}, 100);
 </script>
 </body>
 </html>`;
