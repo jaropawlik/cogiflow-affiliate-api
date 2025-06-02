@@ -129,7 +129,7 @@ export async function GET(
     return NextResponse.redirect(redirectUrl, {
       status: 301,
       headers: {
-        'Cache-Control': 'public, max-age=3600', // Cache successful redirects for 1 hour
+        'Cache-Control': 'no-cache, no-store, must-revalidate', // Disable cache for click tracking
         'X-Cogiflow-Affiliate': affiliateLink.id,
         'X-Cogiflow-Clicks': String((affiliateLink.clicks || 0) + 1),
       },
