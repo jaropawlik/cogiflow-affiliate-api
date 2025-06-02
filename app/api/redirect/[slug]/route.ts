@@ -19,7 +19,6 @@ interface AffiliateLink {
   fallback_url?: string;
   clicks: number;
   created_at: string;
-  updated_at: string;
   active: boolean;
 }
 
@@ -100,8 +99,7 @@ export async function GET(
     const { data: updateData, error: updateError } = await supabase
       .from('affiliate_links')
       .update({ 
-        clicks: (affiliateLink.clicks || 0) + 1,
-        updated_at: new Date().toISOString()
+        clicks: (affiliateLink.clicks || 0) + 1
       })
       .eq('id', affiliateLink.id)
       .select();
