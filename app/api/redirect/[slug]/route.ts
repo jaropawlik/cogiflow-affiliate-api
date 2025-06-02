@@ -149,19 +149,14 @@ a:hover { text-decoration: underline; }
 <p><a href="https://cogiflow.ai">← Powrót do Cogiflow.ai</a></p>
 </div>
 <script>
-// Force open in new window/tab with multiple fallbacks
-const newWindow = window.open('${redirectUrl}', '_blank', 'noopener,noreferrer,width=1200,height=800');
-
-// Check if popup was blocked
-if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
-  // Popup blocked - show fallback
-  document.querySelector('.container').innerHTML = \`
-    <h1>⚠️ Popup zablokowany</h1>
-    <p>Twoja przeglądarka zablokowała popup.</p>
-    <p><a href="${redirectUrl}" target="_blank" rel="noopener noreferrer" style="background: #7c3aed; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block; margin: 20px 0;">🔗 Otwórz ${new URL(redirectUrl).hostname}</a></p>
-    <p><a href="https://cogiflow.ai">← Powrót do Cogiflow.ai</a></p>
-  \`;
-}
+// Create invisible link and auto-click it (bypasses popup blockers)
+const link = document.createElement('a');
+link.href = '${redirectUrl}';
+link.target = '_blank';
+link.rel = 'noopener noreferrer';
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
 </script>
 </body>
 </html>`;
